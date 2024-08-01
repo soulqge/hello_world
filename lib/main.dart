@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/data/expense_data.dart';
 import 'package:hello_world/pages/home.dart';
+import 'package:hello_world/pages/login.dart';
+import 'package:hello_world/pages/settings.dart';
 import 'package:hello_world/splash/splash.dart';
 import 'package:hello_world/theme/theme-provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -21,12 +23,14 @@ void main() async {
       builder: (context) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
-          initialRoute: '/home',
+          initialRoute: '/login',
           debugShowCheckedModeBanner: false,
           theme: themeProvider.themeData,
           routes: {
             '/splash': (context) => SplashScreen(),
-            '/home': (context) => Home()
+            '/home': (context) => HomePage(),
+            '/setting': (context) => SettingsPage(),
+            '/login': (context) => LoginScreen()
           },
         );
       },

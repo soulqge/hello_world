@@ -1,7 +1,6 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world/graph/bar-data.dart';
-import 'package:fl_chart/fl_chart.dart';
-
 
 class BarGraph extends StatelessWidget {
   final double? maxY;
@@ -15,15 +14,19 @@ class BarGraph extends StatelessWidget {
 
   const BarGraph({super.key, required this.maxY, required this.jSen, required this.jSel, required this.jRab, required this.jKam, required this.jJum, required this.jSab, required this.jMin});
 
+  
+
   @override
   Widget build(BuildContext context) {
 
-    BarData myBarData = BarData(jSen: jSen, jSel: jSel, jRab: jRab, jKam: jKam, jJum: jJum, jSab: jSab, jMin: jMin);
+    BarData myBarData = BarData(jSen: jSen, jSel: jSel, jRab: jRab, jKam: jKam, jJum: jJum, jSab: jSab, jMin: jMin); 
+
+    myBarData.initBarData();
 
     return Container(
       height: 600,
-      width: 300,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Theme.of(context).colorScheme.background),
+      width: 380,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Theme.of(context).colorScheme.background,),
       child: Padding(
         padding: EdgeInsets.only(top: 10, bottom: 10),
         child: BarChart(BarChartData(
@@ -36,30 +39,27 @@ class BarGraph extends StatelessWidget {
             rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(showTitles: true,
-              getTitlesWidget: (value, meta){
+              getTitlesWidget: (value, meta) {
                 late Widget text;
-                if (value.toInt() >= 0 && value.toInt() < 7){
-                  text = Text(
-                    dayNames[value.toInt()],
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10
-                    ),
-                  );
-                }
-                else{
-                  text = Text(
-                    " ",
-                    style: TextStyle(color: Colors.transparent),
-                  );
-                }
+                  if (value.toInt() >= 0 && value.toInt() < 7) {
+                    text = Text(
+                      dayNames[value.toInt()],
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10),
+                    );
+                  } else {
+                    text = Text(
+                      "",
+                      style: TextStyle(color: Colors.transparent),
+                    );
+                  }
 
-                return SideTitleWidget(child: text, axisSide: meta.axisSide);
-              }
+                  return SideTitleWidget(child: text, axisSide: meta.axisSide);
+              },
               )
-            ),
-
+            )
           ),
           gridData: FlGridData(show: false),
           borderData: FlBorderData(show: false),
@@ -77,13 +77,15 @@ class BarGraph extends StatelessWidget {
             )
           ]
           )
-        ).toList()
+        ).toList(),
+        
         )
-      )
-      
+          ),
       ),
     );
   }
+
 }
 final dayNames = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+
 

@@ -1,7 +1,15 @@
-class ExpenseItem{
-  final String nama;
-  final String jumlah;
-  final DateTime tanggal;
+class ExpenseItem {
+  String id; // Unique identifier
+  String nama;
+  String jumlah;
+  DateTime tanggal;
 
-  ExpenseItem({required this.nama, required this.jumlah, required this.tanggal});
+  ExpenseItem({
+    required this.id,
+    required this.nama,
+    required this.jumlah,
+    required this.tanggal,
+  });
+
+  // Add other necessary methods and properties
 }
