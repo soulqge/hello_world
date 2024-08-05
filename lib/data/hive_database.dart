@@ -35,6 +35,7 @@ class HiveDatabase {
       DateTime tanggal = savedExpenses[i][3];
       String imagePath = savedExpenses[i][4];
 
+
       ExpenseItem expense = ExpenseItem(
         id: id, // Use the retrieved ID
         nama: nama,
