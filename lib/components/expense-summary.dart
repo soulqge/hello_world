@@ -100,7 +100,7 @@ class ExpenseSummary extends StatelessWidget {
           SizedBox(
             height: 200,
             child: BarGraph(
-              maxY: 100000,
+              maxY: calculateMax(value, senin, selasa, rabu, kamis, jumat, sabtu, minggu),
               jSen: value.hitungPengeluaranHarian()[senin] ?? 0, 
               jSel: value.hitungPengeluaranHarian()[selasa] ?? 0, 
               jRab: value.hitungPengeluaranHarian()[rabu] ?? 0, 

@@ -10,19 +10,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  startTime()async{
-    return Timer(
-      Duration(seconds: 2),
-       () => Navigator.of(context).pushReplacementNamed('/home')
-      );
+  startTime() async {
+    return Timer(Duration(seconds: 2),
+        () => Navigator.of(context).pushReplacementNamed('/login'));
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     startTime();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

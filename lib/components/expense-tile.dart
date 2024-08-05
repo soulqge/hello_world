@@ -24,7 +24,7 @@ class ExpenseTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             padding: EdgeInsets.all(8),
           ),
-          SizedBox(width: 10,),
+          SizedBox(width: 3,),
           SlidableAction(
             onPressed: editTapped,
             icon: Icons.edit,

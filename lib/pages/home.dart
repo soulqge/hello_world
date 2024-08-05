@@ -73,7 +73,8 @@ class _HomePageState extends State<HomePage>
       tanggal: expense.tanggal,
     );
 
-    Provider.of<ExpenseData>(context, listen: false).updatePengeluaran(updatedPengeluaran);
+    Provider.of<ExpenseData>(context, listen: false)
+        .updatePengeluaran(updatedPengeluaran);
 
     Navigator.pop(context);
     clear();
@@ -95,7 +96,8 @@ class _HomePageState extends State<HomePage>
           ),
           MaterialButton(
             onPressed: () {
-              Provider.of<ExpenseData>(context, listen: false).hapusPengeluaran(expense);
+              Provider.of<ExpenseData>(context, listen: false)
+                  .hapusPengeluaran(expense);
               Navigator.pop(context);
             },
             child: Text('Hapus'),
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage>
   void tambah() {
     var uuid = Uuid();
     ExpenseItem pengeluaranBaru = ExpenseItem(
-      id: uuid.v4(), // Generate a new unique ID
+      id: uuid.v4(), // buat id baru setiap add pengeluaran
       nama: nPengeluaranController.text,
       jumlah: jPengeluaranController.text,
       tanggal: DateTime.now(),
@@ -173,64 +175,70 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseData>(
-      builder: (context, value, child) => Scaffold(
-        appBar: AppBar(
-          title: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Center(
-              child: Text(
-                '${DateFormat('EEEE, MMMM d, y').format(DateTime.now())}',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.inversePrimary),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Consumer<ExpenseData>(
+        builder: (context, value, child) => Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Center(
+                child: Text(
+                  '${DateFormat('EEEE, MMMM d, y').format(DateTime.now())}',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.inversePrimary),
+                ),
               ),
             ),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            foregroundColor: Theme.of(context).colorScheme.inversePrimary,
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
-          foregroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        floatingActionButton: FloatingActionButton(
-          onPressed: addPengeluaran,
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          foregroundColor: Theme.of(context).colorScheme.background,
-          child: Icon(Icons.add),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              ExpenseSummary(awalMinggu: value.awalMingguHari()),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Histori Transaksi",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.inversePrimary),
-                  )),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: value.getAllExpenseList().length,
-                  itemBuilder: (context, index) => ExpenseTile(
-                        nama: value.getAllExpenseList()[index].nama,
-                        jumlah: value.getAllExpenseList()[index].jumlah,
-                        tanggal: value.getAllExpenseList()[index].tanggal,
-                        deleteTapped: (p0) =>
-                            hapus(value.getAllExpenseList()[index]),
-                        editTapped: (p0) =>
-                            editPengeluaran(value.getAllExpenseList()[index]),
-                      )),
-            ],
+          floatingActionButton: FloatingActionButton(
+            onPressed: addPengeluaran,
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            foregroundColor: Theme.of(context).colorScheme.background,
+            child: Icon(Icons.add),
           ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: [
+                ExpenseSummary(awalMinggu: value.awalMingguHari()),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text(
+                      "Histori Transaksi",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.inversePrimary),
+                    )),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: value.getAllExpenseList().length,
+                    itemBuilder: (context, index) => ExpenseTile(
+                          nama: value.getAllExpenseList()[index].nama,
+                          jumlah: value.getAllExpenseList()[index].jumlah,
+                          tanggal: value.getAllExpenseList()[index].tanggal,
+                          deleteTapped: (p0) =>
+                              hapus(value.getAllExpenseList()[index]),
+                          editTapped: (p0) =>
+                              editPengeluaran(value.getAllExpenseList()[index]),
+                        )),
+              ],
+            ),
+          ),
+          bottomNavigationBar: BottomNav(selectedItem: 0),
         ),
-        bottomNavigationBar: BottomNav(selectedItem: 0),
       ),
     );
   }
