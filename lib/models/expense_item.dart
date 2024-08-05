@@ -1,5 +1,5 @@
 class ExpenseItem {
-  String id; // Unique identifier
+  String id; 
   String nama;
   String jumlah;
   DateTime tanggal;
@@ -11,5 +11,4 @@ class ExpenseItem {
     required this.tanggal,
   });
 
-  // Add other necessary methods and properties
 }
