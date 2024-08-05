@@ -15,7 +15,6 @@ class HiveDatabase {
         expense.nama,
         expense.jumlah,
         expense.tanggal.millisecondsSinceEpoch,
-        expense.imagePath
       ];
       allExpensesFormated.add(expenseFormatted);
     }
@@ -33,7 +32,6 @@ class HiveDatabase {
       String nama = savedExpenses[i][1];
       String jumlah = savedExpenses[i][2];
       DateTime tanggal = DateTime.fromMillisecondsSinceEpoch(savedExpenses[i][3]);
-      String imagePath = savedExpenses[i][4];
 
 
       ExpenseItem expense = ExpenseItem(
@@ -41,7 +39,6 @@ class HiveDatabase {
         nama: nama,
         jumlah: jumlah,
         tanggal: tanggal,
-        imagePath: imagePath
       );
 
       allExpenses.add(expense);

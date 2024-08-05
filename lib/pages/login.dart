@@ -13,7 +13,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // Perform login logic here
       String username = _usernameController.text;
       String password = _passwordController.text;
 

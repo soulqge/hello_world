@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final nPengeluaranController = TextEditingController();
   final jPengeluaranController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _editFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -36,19 +38,65 @@ class _HomePageState extends State<HomePage>
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         title: Text("Tambah Pengeluaran"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nPengeluaranController,
-              decoration: InputDecoration(hintText: 'Jenis Pengeluaran'),
+        content: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: nPengeluaranController,
+                  decoration: InputDecoration(
+                    hintText: 'Jenis Pengeluaran',
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.inversePrimary)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .green),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Jenis Pengeluaran';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: jPengeluaranController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'Jumlah Pengeluaran',
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.inversePrimary)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .green),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Jumlah Pengeluaran';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Masukkan jumlah yang valid';
+                    }
+                    return null;
+                  },
+                ),
+              ],
             ),
-            TextField(
-              controller: jPengeluaranController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(hintText: 'Jumlah Pengeluaran'),
-            )
-          ],
+          ),
         ),
         actions: [
           MaterialButton(
@@ -56,16 +104,19 @@ class _HomePageState extends State<HomePage>
             child: Text('Batal'),
           ),
           MaterialButton(
-            onPressed: tambah,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                tambah();
+              }
+            },
             child: Text('Tambah'),
-          )
+          ),
         ],
       ),
     );
   }
 
   void edit(ExpenseItem expense) {
-    // Update the expense item
     ExpenseItem updatedPengeluaran = ExpenseItem(
       id: expense.id,
       nama: nPengeluaranController.text,
@@ -133,19 +184,65 @@ class _HomePageState extends State<HomePage>
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         title: Text("Edit Pengeluaran"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nPengeluaranController,
-              decoration: InputDecoration(hintText: 'Jenis Pengeluaran'),
+        content: SingleChildScrollView(
+          child: Form(
+            key: _editFormKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: nPengeluaranController,
+                  decoration: InputDecoration(
+                    hintText: 'Jenis Pengeluaran',
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.inversePrimary)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .green),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Jenis Pengeluaran';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: jPengeluaranController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'Jumlah Pengeluaran',
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.inversePrimary)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .green),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Jumlah Pengeluaran';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Masukkan jumlah yang valid';
+                    }
+                    return null;
+                  },
+                ),
+              ],
             ),
-            TextField(
-              controller: jPengeluaranController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(hintText: 'Jumlah Pengeluaran'),
-            )
-          ],
+          ),
         ),
         actions: [
           MaterialButton(
@@ -154,10 +251,12 @@ class _HomePageState extends State<HomePage>
           ),
           MaterialButton(
             onPressed: () {
-              edit(expense); // Pass the original expense item
+              if (_editFormKey.currentState!.validate()) {
+                edit(expense);
+              }
             },
             child: Text('Simpan'),
-          )
+          ),
         ],
       ),
     );
