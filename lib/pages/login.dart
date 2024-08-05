@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.green
-                                          ), // Change this to your desired color for focused state
+                                          ),
                                   ),
                                 ),
                                 obscureText: true,
