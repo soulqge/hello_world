@@ -13,7 +13,7 @@ class HiveDatabase {
       List<dynamic> expenseFormatted = [
         expense.id, // Include ID
         expense.nama,
-        expense.jumlah,
+        expense.jumlah.millisecondsSinceEpoch
         expense.tanggal
       ];
       allExpensesFormated.add(expenseFormatted);
@@ -31,7 +31,7 @@ class HiveDatabase {
       String id = savedExpenses[i][0]; // Retrieve ID
       String nama = savedExpenses[i][1];
       String jumlah = savedExpenses[i][2];
-      DateTime tanggal = savedExpenses[i][3];
+      DateTime tanggal = DateTime.fromMillisecondsSinceEpoch(savedExpenses[i][3]);
 
       ExpenseItem expense = ExpenseItem(
         id: id, // Use the retrieved ID
