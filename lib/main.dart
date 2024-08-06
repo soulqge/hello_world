@@ -23,7 +23,7 @@ void main() async {
       builder: (context) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
-          initialRoute: '/login',
+          initialRoute: '/splash',
           debugShowCheckedModeBanner: false,
           theme: themeProvider.themeData,
           routes: {
